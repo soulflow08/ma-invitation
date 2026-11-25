@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Приглашение · МА (間): Пространство между · ЗИЛАРТ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@300;400;500&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111111;
+    --paper:#ffffff;
+    --red:#F24444;
+    --muted:#6f6f6f;
+    --line:#e5e5e5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Roboto",sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;
+  }
+  .mono{
+    font-family:"Roboto Mono",monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:clamp(24px,6vw,64px) clamp(20px,5vw,32px)}
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px clamp(20px,5vw,32px);
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:var(--paper);z-index:5;
+  }
+  .logo{font-family:"Poppins",sans-serif;font-weight:700;font-size:15px;letter-spacing:.22em}
+  .logo span{color:var(--red)}
+
+  h1{
+    font-family:"Poppins",sans-serif;font-weight:700;
+    font-size:clamp(28px,7vw,52px);
+    line-height:1.08;letter-spacing:-.01em;
+    text-transform:uppercase;
+    margin-top:16px;
+  }
+  .lead{margin-top:20px;max-width:34em;font-size:clamp(15px,2.4vw,17px);font-weight:300;color:#333}
+
+  .kicker{margin-top:clamp(40px,10vw,72px)}
+
+  /* ——— screens ——— */
+  .screen{display:none;animation:fade .45s ease both}
+  .screen.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ——— page 1 ——— */
+  .ask{
+    margin-top:clamp(40px,9vw,64px);
+    border-top:1px solid var(--ink);
+    padding-top:clamp(24px,5vw,36px);
+  }
+  .ask h2{
+    font-family:"Poppins",sans-serif;font-weight:700;
+    font-size:clamp(22px,5vw,34px);text-transform:uppercase;line-height:1.15;
+  }
+  .answers{
+    margin-top:28px;
+    display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+    min-height:56px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:"Roboto",sans-serif;font-size:14px;letter-spacing:.06em;
+    text-transform:uppercase;text-decoration:none;
+    padding:14px 32px;border:1px solid var(--ink);
+    background:var(--paper);color:var(--ink);
+    transition:background .2s,color .2s;cursor:pointer;
+  }
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn--red{border-color:var(--red);color:var(--red)}
+  .btn--red:hover{background:var(--red);color:#fff}
+  .btn--yes{
+    font-family:"Poppins",sans-serif;font-weight:700;font-size:16px;
+    padding:16px 48px;border-width:2px;
+  }
+  #no{
+    position:relative;
+    z-index:50;
+    user-select:none;-webkit-user-select:none;
+    touch-action:none;
+  }
+  #no.fleeing{
+    position:fixed;
+    transition:left .18s ease, top .18s ease;
+  }
+  .hint{margin-top:22px;font-size:14px;font-weight:300;color:var(--muted)}
+
+  /* ——— page 2 ——— */
+  .date-block{
+    margin-top:clamp(36px,8vw,56px);
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+    padding:clamp(24px,5vw,36px) 0;
+    display:flex;flex-wrap:wrap;gap:clamp(20px,5vw,56px);align-items:baseline;
+  }
+  .date-big{
+    font-family:"Poppins",sans-serif;font-weight:700;
+    font-size:clamp(32px,8vw,56px);line-height:1;
+  }
+  .date-big small{
+    display:block;font-family:"Roboto Mono",monospace;
+    font-size:13px;font-weight:400;letter-spacing:.14em;
+    color:var(--muted);margin-top:12px;text-transform:uppercase;
+  }
+  .time{
+    font-family:"Roboto Mono",monospace;font-size:clamp(28px,6vw,44px);
+    color:var(--red);
+  }
+  .time small{display:block;font-size:12px;letter-spacing:.14em;color:var(--muted);margin-top:8px;text-transform:uppercase}
+
+  #cd{
+    margin-top:20px;
+    font-family:"Roboto Mono",monospace;font-size:13px;
+    letter-spacing:.1em;color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+
+  .plan{margin-top:clamp(28px,6vw,40px);display:grid;gap:0}
+  .plan-row{
+    display:grid;grid-template-columns:88px 1fr;gap:clamp(16px,4vw,32px);
+    padding:20px 0;border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .plan-row:first-child{border-top:1px solid var(--line)}
+  .plan-time{
+    font-family:"Roboto Mono",monospace;font-size:15px;color:var(--red);
+    padding-top:2px;
+  }
+  .plan-row h3{
+    font-family:"Poppins",sans-serif;font-weight:600;font-size:16px;
+    text-transform:uppercase;letter-spacing:.02em;
+  }
+  .plan-row p{margin-top:6px;font-size:15px;font-weight:300;color:#333}
+  .jp{font-family:"Roboto Mono",monospace;color:var(--muted);font-size:13px}
+
+  .dress{
+    margin-top:clamp(28px,6vw,40px);
+    background:#faf7f1;border:1px solid var(--line);
+    padding:clamp(20px,4vw,28px);
+  }
+  .dress h3{
+    font-family:"Poppins",sans-serif;font-weight:700;font-size:15px;
+    text-transform:uppercase;letter-spacing:.08em;
+  }
+  .dress p{margin-top:10px;font-size:15px;font-weight:300;color:#333;max-width:34em}
+  .dress .jp{display:block;margin-top:12px}
+
+  .actions{margin-top:clamp(32px,7vw,48px);display:flex;flex-wrap:wrap;gap:12px}
+  .btn svg{width:14px;height:14px;flex:none}
+
+  .note{
+    margin-top:clamp(32px,7vw,48px);
+    padding-top:20px;border-top:1px solid var(--line);
+    font-size:14px;font-weight:300;color:var(--muted);max-width:36em;
+  }
+  footer{
+    margin-top:clamp(40px,9vw,72px);
+    padding-top:20px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">ЗИЛА<span>РТ</span></div>
+  <div class="mono" id="head-label">Приглашение</div>
+</header>
+
+<!-- ═══════════ PAGE 1 ═══════════ -->
+<section class="screen active" id="s1">
+  <div class="wrap">
+    <p class="mono kicker">Программа · 0+ · Билеты куплены</p>
+
+    <h1>МА <span>(間)</span>:<br>Пространство между</h1>
+
+    <p class="lead">Приглашаю тебя в музей. Программа о паузах, тишине и пространстве между событиями — где тоже что-то происходит.</p>
+
+    <div class="ask">
+      <h2>Пойдёшь со мной<br>на свидание?</h2>
+      <div class="answers" id="answers">
+        <button class="btn btn--yes btn--red" id="yes">Да</button>
+        <button class="btn" id="no">Нет</button>
+      </div>
+      <p class="hint" id="hint">Ответ один правильный.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PAGE 2 ═══════════ -->
+<section class="screen" id="s2">
+  <div class="wrap">
+    <p class="mono kicker">Свидание · Подробности</p>
+
+    <h1>Всё про<br>наш вечер</h1>
+
+    <div class="date-block">
+      <div class="date-big">
+        27 ноября
+        <small>2026 · пятница</small>
+      </div>
+      <div class="time">
+        15:00
+        <small>встреча у твоего дома</small>
+      </div>
+    </div>
+    <p id="cd">—</p>
+
+    <div class="plan">
+      <div class="plan-row">
+        <div class="plan-time">15:00</div>
+        <div>
+          <h3>Встречаемся у тебя</h3>
+          <p>Приду к твоему дому. Не спеши, я подожду.</p>
+        </div>
+      </div>
+      <div class="plan-row">
+        <div class="plan-time">17:00</div>
+        <div>
+          <h3>ЗИЛАРТ · МА (間)</h3>
+          <p>Бульвар Братьев Весниных, 3. Программа «Пространство между» — билеты уже куплены.</p>
+        </div>
+      </div>
+      <div class="plan-row">
+        <div class="plan-time">вечер</div>
+        <div>
+          <h3>Прогулка после музея</h3>
+          <p class="jp">散歩 · ゆっくりと</p>
+          <p>Без спешки, пока не захочется домой. Маршрут знаю только я.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dress">
+      <h3>Дресс-код</h3>
+      <p>Что-нибудь в японском стиле. Не строго — просто чтобы вечер был одним целым.</p>
+      <span class="jp">和服 · 茶色 · 略して、君らしく</span>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn--red" href="https://zilartmuseum.ru/programs/ma-prostranstvo-mezhdu/" target="_blank" rel="noopener">
+        О программе
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a class="btn" href="https://yandex.ru/maps/?text=Москва, бульвар Братьев Весниных 3" target="_blank" rel="noopener">Маршрут</a>
+      <button class="btn" id="back">Назад</button>
+    </div>
+
+    <p class="note">Останется только прийти — и немного замедлиться.</p>
+
+    <footer>
+      <span class="mono">ЗИЛАРТ · Москва</span>
+      <span class="mono">27.11.2026 · 15:00</span>
+    </footer>
+  </div>
+</section>
+
+<script>
+  const s1 = document.getElementById('s1');
+  const s2 = document.getElementById('s2');
+  const headLabel = document.getElementById('head-label');
+  const no = document.getElementById('no');
+  const hint = document.getElementById('hint');
+
+  function show(page) {
+    (page === 1 ? s1 : s2).classList.add('active');
+    (page === 1 ? s2 : s1).classList.remove('active');
+    headLabel.textContent = page === 1 ? 'Приглашение' : 'Свидание';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  document.getElementById('yes').addEventListener('click', () => show(2));
+  document.getElementById('back').addEventListener('click', () => show(1));
+
+  /* «Нет» убегает — и вернуться нельзя */
+  const hints = [
+    'Ответ один правильный.',
+    'Кнопка глючит, попробуй ещё раз.',
+    'Она устала от этих вопросов.',
+    'Ты уверен?',
+    'Мимо.',
+    'Нет — это не ответ.',
+  ];
+  let tries = 0;
+  let caught = false;
+
+  function flee() {
+    if (caught) return;
+    tries++;
+    no.classList.add('fleeing');
+    const r = no.getBoundingClientRect();
+    const w = r.width, h = r.height;
+    const pad = 12;
+    const maxX = window.innerWidth - w - pad;
+    const maxY = Math.max(window.innerHeight - h - pad, pad);
+    let x, y, guard = 0;
+    do {
+      x = pad + Math.random() * (maxX - pad);
+      y = pad + Math.random() * (maxY - pad);
+      guard++;
+    } while (guard < 20 && Math.hypot(x - r.left, y - r.top) < 160);
+    no.style.left = x + 'px';
+    no.style.top = y + 'px';
+    hint.textContent = hints[Math.min(tries, hints.length - 1)];
+  }
+
+  /* после 6 попыток «Нет» сдаётся и исчезает навсегда */
+  function onHover() {
+    if (tries >= 6 && !caught) {
+      caught = true;
+      no.style.transition = 'opacity .4s, transform .4s';
+      no.style.opacity = '0';
+      no.style.transform = 'scale(.6)';
+      no.style.pointerEvents = 'none';
+      hint.textContent = 'Видишь? Оно само исчезло. Значит — да.';
+      return;
+    }
+    flee();
+  }
+  no.addEventListener('mouseenter', onHover);
+  no.addEventListener('touchstart', (e) => { e.preventDefault(); onHover(); }, { passive: false });
+  no.addEventListener('mousedown', (e) => { e.preventDefault(); onHover(); });
+
+  /* ——— countdown ——— */
+  const target = new Date('2026-11-27T15:00:00+03:00');
+  const cd = document.getElementById('cd');
+  function tick() {
+    const ms = target - Date.now();
+    if (ms <= 0) { cd.textContent = 'пришло время'; return; }
+    const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24,
+          m = Math.floor(ms / 6e4) % 60, s = Math.floor(ms / 1e3) % 60;
+    cd.textContent = `до встречи: ${d} д ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    requestAnimationFrame(tick);
+  }
+  tick();
+</script>
+</body>
+</html>
